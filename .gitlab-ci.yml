@@ -1,0 +1,48 @@
+# Use a Docker image that includes the necessary tools (Docker CLI)
+image: docker:latest
+
+# Define the stages in your pipeline
+stages:
+  - build
+
+# Define the build job
+build_and_push_image:
+  stage: build
+  # Use the Docker-in-Docker service to run docker commands securely
+  services:
+    - docker:dind
+  
+  # Specify when to run this job (e.g., on every push to the main branch)
+  only:
+    - main
+    
+  script:
+    # 1. Log in to the GitLab Container Registry
+    # GitLab provides these environment variables automatically.
+    - echo "Logging into GitLab Container Registry..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+    # 2. Define the image tag
+    # Uses the full registry path ($CI_REGISTRY_IMAGE) and a unique short commit hash ($CI_COMMIT_SHORT_SHA) for the tag.
+    - IMAGE_TAG=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - LATEST_TAG=$CI_REGISTRY_IMAGE:latest
+
+    # 3. Build the Docker Image
+    # The '.' indicates the Dockerfile is in the current directory.
+    - echo "Building image with tag: $IMAGE_TAG"
+    - docker build --pull -t $IMAGE_TAG .
+
+    # 4. Push the uniquely tagged image
+    - echo "Pushing uniquely tagged image: $IMAGE_TAG"
+    - docker push $IMAGE_TAG
+    
+    # 5. Tag and Push 'latest' for convenience
+    # This keeps a convenient 'latest' tag pointing to the newest image.
+    - echo "Tagging and pushing 'latest' image: $LATEST_TAG"
+    - docker tag $IMAGE_TAG $LATEST_TAG
+    - docker push $LATEST_TAG
+
+  # Define artifacts to store (optional, but useful for debugging or next stages)
+  # artifacts:
+  #   paths:
+  #     - HelloWorld.class
