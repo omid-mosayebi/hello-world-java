@@ -20,7 +20,7 @@ build_and_push_image:
     # 1. Log in to the GitLab Container Registry
     # GitLab provides these environment variables automatically.
     - echo "Logging into GitLab Container Registry..."
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u omidmosayebi@gamil.com -p P@di2468P@di2468
 
     # 2. Define the image tag
     # Uses the full registry path ($CI_REGISTRY_IMAGE) and a unique short commit hash ($CI_COMMIT_SHORT_SHA) for the tag.
