@@ -24,7 +24,7 @@ build_and_push_image:
 
     # 2. Define the image tag
     # Uses the full registry path ($CI_REGISTRY_IMAGE) and a unique short commit hash ($CI_COMMIT_SHORT_SHA) for the tag.
-    - IMAGE_TAG=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - IMAGE_TAG=$omidmosayebi/omid-image
     - LATEST_TAG=$CI_REGISTRY_IMAGE:latest
 
     # 3. Build the Docker Image
