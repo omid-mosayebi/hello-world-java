@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: hello-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      imagePullSecrets:              # 👈 right here (inside template.spec)
+      - name: ghcr-secret
+      containers:
+      - name: hello-world
+        image: ghcr.io/omid-mosayebi/hello-world-java:latest
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
