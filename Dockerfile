@@ -10,7 +10,7 @@ COPY HelloWorld.java .
 
 # Compile the Java source file, creating HelloWorld.class
 RUN javac HelloWorld.java
-
+ 
 
 # === STAGE 2: CREATE THE FINAL RUNTIME IMAGE ===
 # Use a JRE image, which is much smaller than the JDK, for running the application
