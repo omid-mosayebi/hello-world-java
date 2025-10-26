@@ -7,10 +7,8 @@ on:
 
 jobs:
   build-and-push:
-    # Use a standard, free, GitHub-hosted runner
     runs-on: ubuntu-latest
     
-    # Permissions required to read source code and write to GHCR
     permissions:
       contents: read
       packages: write
@@ -24,22 +22,26 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          # The GITHUB_TOKEN is a temporary secret provided by GitHub for each workflow run
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          # This should correctly evaluate to ghcr.io/omid-mosayebi/hello-world-java
+          images: ghcr.io/${{ github.repository }} 
+          
+          # This is the corrected multi-line YAML structure
           tags: |
-            type=sha,prefix=,suffix=,format={{sha}}
+            # Tag the image with the short commit SHA (e.g., ghcr.io/owner/repo:72838c4)
+            type=sha,format={{sha}}
+            # Tag the image as 'latest' only for the main branch
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: . # Looks for the Dockerfile in the current directory
+          context: . 
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
