@@ -33,10 +33,11 @@ jobs:
           
           # This is the corrected multi-line YAML structure
           tags: |
-            # Tag the image with the short commit SHA (e.g., ghcr.io/owner/repo:72838c4)
-            type=sha,format={{sha}}
-            # Tag the image as 'latest' only for the main branch
+            # FIX: Explicitly set prefix= and suffix= for 'sha' type
+            type=sha,prefix=,suffix=,format={{sha}}
+            # Keep the 'latest' tag line as well
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+          
             
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
