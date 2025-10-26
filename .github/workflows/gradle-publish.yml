@@ -33,8 +33,9 @@ jobs:
           
           # This is the corrected multi-line YAML structure
           tags: |
-            # FIX: Explicitly set prefix= and suffix= for 'sha' type
-            type=sha,prefix=,suffix=,format={{sha}}
+            # FIX: Use 'event=true' which tells the action to derive the SHA tag 
+            # from the push event, avoiding the problematic 'format' syntax.
+            type=sha,event=true
             # Keep the 'latest' tag line as well
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
           
