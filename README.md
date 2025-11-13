@@ -2,7 +2,7 @@
 This repository contains a simple Java "Hello World" application and the necessary DevOps pipeline and Infrastructure-as-Code (IaC) files to automatically build, containerize, and deploy the application.
 
 It serves as a demonstration of a multi-stage CI/CD pipeline and deployment to a Kubernetes cluster.
-🎯 Key DevOps Objectives Demonstrated
+🎯 Key DevOps Objectives Demonstrated 
 This project showcases expertise in the following key areas:
 Multi-Stage Docker Builds: Creating a small, efficient, and secure container image.
 GitLab CI/CD & GitHub Actions: Implementing two distinct, automated CI/CD pipelines for build and push.
