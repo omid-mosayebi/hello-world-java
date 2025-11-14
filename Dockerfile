@@ -23,4 +23,5 @@ WORKDIR /app
 COPY --from=builder /app/HelloWorld.class .
 
 # Set the default command to run when the container starts
-CMD ["java", "HelloWorld"]
+#CMD ["java", "HelloWorld"]
+CMD ["sh", "-c", "java HelloWorld && tail -f /dev/null"]
